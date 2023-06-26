@@ -24,4 +24,4 @@ Aksarantara has two functions.
 
 `aksarantara.detect(text)` and `aksarantara.transliterate(text, from, to)`
 
-Information on how to use these functions is available in the (PHP version of [Aksarantara](https://www.github.com/enginestein/aksarantara.php)
+Information on how to use these functions is available in the [PHP version of Aksarantara](https://www.github.com/enginestein/aksarantara.php)
