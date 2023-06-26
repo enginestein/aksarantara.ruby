@@ -1,0 +1,13 @@
+[package]
+name = "aksarantara"
+version = "1.0.0"
+authors = ["Arya Praneil Pritesh <aryapraneil@gmail.com>"]
+publish = false
+
+[dependencies]
+lazy_static = "^1.1"
+ruby-sys = "^0.3"
+regex = "^1.0"
+
+[lib]
+crate-type = ["cdylib"]

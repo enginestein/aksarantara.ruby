@@ -1,0 +1,2 @@
+cargo:rustc-link-lib=dylib=x64-ucrt-ruby310
+cargo:rustc-link-search=C:/Ruby31-x64/lib
