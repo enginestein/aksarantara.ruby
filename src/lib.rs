@@ -5,7 +5,7 @@ extern crate ruby_sys;
 
 #[macro_use]
 mod rb;
-pub mod detect;
+pub mod detect; 
 
 #[cfg(test)]
 mod tests {
