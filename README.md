@@ -14,10 +14,6 @@ And then execute:
 
     $ bundle
 
-Or install it:
-
-    $ gem install aksarantara
-
 ## Usage
 
 Aksarantara has two functions. 
