@@ -1,10 +1,10 @@
-# frozen_string_literal: true
+
 
 RSpec.shared_examples "letter tests" do |from, to, options = {}|
   context "letter tests" do
-    # If `from` vowels are missing ṛ ṝ ḷ ḹ relative to `to`, remove them
-    # so that the test can pass.
-    def equalize_vowels(from, to) # rubocop:disable AbcSize
+    
+    
+    def equalize_vowels(from, to) 
       from_data = scheme_data[from][:vowels].strip.split(/\s+/)
       to_data = scheme_data[to][:vowels].strip.split(/\s+/)
       diff = from_data.count - to_data.count
@@ -12,9 +12,9 @@ RSpec.shared_examples "letter tests" do |from, to, options = {}|
       [from_data.join(" "), to_data.join(" ")]
     end
 
-    # If `from` marks are missing ṛ ṝ [ḷ ḹ] relative to `to`, remove them
-    # so that the test can pass
-    def equalize_marks(from, to) # rubocop:disable AbcSize
+    
+    
+    def equalize_marks(from, to) 
       from_data = scheme_data[from][:marks].strip.split(/\s+/)
       to_data = scheme_data[to][:marks].strip.split(/\s+/)
       diff = from_data.count - to_data.count

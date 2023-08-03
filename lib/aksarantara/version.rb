@@ -1,7 +1,6 @@
-# frozen_string_literal: true
+require 'pathname'
 
-module aksarantara
-  # The version number
+module Aksarantara
   VERSION = "1.0.0"
 
   GEM_ROOT = Pathname.new(File.realpath(File.join(__dir__, "..", "..")))

@@ -6,9 +6,6 @@ pub const RB_NIL: Value = Value {
     value: Nil as usize,
 };
 
-//
-// Helper functions/macros for dealing with Ruby and CStrings
-//
 
 macro_rules! str2cstr {
     ($s:expr) => {

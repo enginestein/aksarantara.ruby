@@ -3,26 +3,26 @@ use detect;
 use rb;
 use rb::{CallbackPtr, Value, RB_NIL};
 
-// Initialize all of the Ruby-specific static variables.
+
 lazy_static! {
-  // Lookup table for Ruby Results
+  
   static ref RUBY_RESULTS: [Value; 16] = [
-    RB_NIL,                  // 0
-    str2sym!("devanagari"),  // 1
-    str2sym!("bengali") ,    // 2
-    str2sym!("gurmukhi"),    // 3
-    str2sym!("gujarati"),    // 4
-    str2sym!("oriya"),       // 5
-    str2sym!("tamil"),       // 6
-    str2sym!("telugu"),      // 7
-    str2sym!("kannada"),     // 8
-    str2sym!("malayalam"),   // 9
-    str2sym!("iast"),        // 10
-    str2sym!("kolkata"),     // 11
-    str2sym!("itrans"),      // 12
-    str2sym!("slp1"),        // 13
-    str2sym!("velthuis"),    // 14
-    str2sym!("hk")           // 15
+    RB_NIL,                  
+    str2sym!("devanagari"),  
+    str2sym!("bengali") ,    
+    str2sym!("gurmukhi"),    
+    str2sym!("gujarati"),    
+    str2sym!("oriya"),       
+    str2sym!("tamil"),       
+    str2sym!("telugu"),      
+    str2sym!("kannada"),     
+    str2sym!("malayalam"),   
+    str2sym!("iast"),        
+    str2sym!("kolkata"),     
+    str2sym!("itrans"),      
+    str2sym!("slp1"),        
+    str2sym!("velthuis"),    
+    str2sym!("hk")           
   ];
 }
 

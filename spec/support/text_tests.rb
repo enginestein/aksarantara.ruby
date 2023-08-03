@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.shared_examples "text tests" do |from, to, options = {}|
   context "text tests" do
     it "Single word" do

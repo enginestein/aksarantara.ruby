@@ -2,35 +2,15 @@ pub mod ruby;
 
 use regex::Regex;
 
-//
-// Initialize all of the generic static variables
-//
 lazy_static! {
-  // Match escaped control characters
   static ref RE_ESCAPED_CONTROL_CHAR: Regex = Regex::new(r"\\(?:\{#|##|#\})").unwrap();
-
-  // Match ##...## or {#...#} control blocks.
   static ref RE_CONTROL_BLOCK: Regex = Regex::new(r"##.*?##|\{#.*?#\}").unwrap();
-
-  // Match on special Roman characters
   static ref RE_IAST_OR_KOLKATA_ONLY: Regex = Regex::new(r"[āīūṛṝḷḹēōṃḥṅñṭḍṇśṣḻĀĪŪṚṜḶḸĒŌṂḤṄÑṬḌṆŚṢḺ]|[aiueoAIUEO]\x{0304}|[rlRL]\x{0323}\x{0304}?|[mhtdMHTD]\x{0323}|[nN][\x{0307}\x{0303}\x{0323}]|[sS][\x{0301}\x{0323}]|[lL]\x{0331}").unwrap();
-
-  // Match on Kolkata-specific Roman characters
   static ref RE_KOLKATA_ONLY: Regex = Regex::new(r"[ēōĒŌ]|[eoEO]\x{0304}").unwrap();
-
-  // Match on ITRANS-only
   static ref RE_ITRANS_ONLY: Regex = Regex::new(r"ee|oo|\^[iI]|RR[iI]|L[iI]|~N|N\^|Ch|chh|JN|sh|Sh|\.a").unwrap();
-
-  // Match on SLP1-only characters and bigrams
   static ref RE_SLP1_ONLY: Regex = Regex::new(r"[fFxXEOCYwWqQPB]|kz|N[kg]|tT|dD|S[cn]|[aAiIuUeo]R|G[yr]").unwrap();
-
-  // Match on Velthuis-only characters
   static ref RE_VELTHUIS_ONLY: Regex = Regex::new(r"\.[mhnrlntds]|\x22n|~s").unwrap();
-
-  // Match on chars shared by ITRANS and Velthuis
   static ref RE_ITRANS_OR_VELTHUIS_ONLY: Regex = Regex::new(r"aa|ii|uu|~n").unwrap();
-
-  // Match on characters available in Harvard-Kyoto
   static ref RE_HARVARD_KYOTO: Regex = Regex::new(r"[aAiIuUeoRMHkgGcjJTDNtdnpbmyrlvzSsh]").unwrap();
 }
 
@@ -43,16 +23,10 @@ fn first_brahmic_char(s: &str) -> usize {
     0
 }
 
-//
-// The function itself!
-//
 #[no_mangle]
 pub extern "C" fn detect_scheme(s: &str) -> usize {
-    // Clean-up string of control characters.
     let r_str = &RE_ESCAPED_CONTROL_CHAR.replace_all(s, "");
     let r_str = &RE_CONTROL_BLOCK.replace_all(r_str, "");
-
-    // Brahmic schemes are all within a specific range of code points.
     let brahmic_codepoint = first_brahmic_char(r_str);
     if brahmic_codepoint != 0 {
         return match brahmic_codepoint {
@@ -69,24 +43,23 @@ pub extern "C" fn detect_scheme(s: &str) -> usize {
         };
     }
 
-    // Romanizations
     if RE_IAST_OR_KOLKATA_ONLY.is_match(r_str) {
         if RE_KOLKATA_ONLY.is_match(r_str) {
-            11 // Kolkata
+            11 
         } else {
-            10 // IAST
+            10
         }
     } else if RE_ITRANS_ONLY.is_match(r_str) {
-        12 // ITRANS
+        12 
     } else if RE_SLP1_ONLY.is_match(r_str) {
-        13 // SLP1
+        13 
     } else if RE_VELTHUIS_ONLY.is_match(r_str) {
-        14 // Velthuis
+        14 
     } else if RE_ITRANS_OR_VELTHUIS_ONLY.is_match(r_str) {
-        12 // ITRANS
+        12 
     } else if RE_HARVARD_KYOTO.is_match(r_str) {
-        15 // HK
+        15 
     } else {
-        0 // Unknown
+        0 
     }
 }

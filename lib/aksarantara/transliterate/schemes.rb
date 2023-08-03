@@ -1,27 +1,7 @@
-# frozen_string_literal: true
-
 module aksarantara
   module Transliterate
-    #  Schemes
-    #  =======
-    #  Schemes are of two kinds: "Brahmic" and "roman." "Brahmic" schemes
-    #  describe abugida scripts found in India. "Roman" schemes describe
-    #  manufactured alphabets that are meant to describe or encode Brahmi
-    #  scripts. Abugidas and alphabets are processed by separate algorithms
-    #  because of the unique difficulties involved with each.
-    #
-    #  Brahmic consonants are stated without a virama. Roman consonants are
-    #  stated without the vowel 'a'.
-    #
-    #  (Since "abugida" is not a well-known term, aksarantara uses "Brahmic"
-    #  and "roman" for clarity.)
-    #
     @schemes = {
 
-      # Bengali
-      # -------
-      # 'va' and 'ba' are both rendered as ব.
-      #
       bengali: {
         vowels: "অ আ ই ঈ উ ঊ ঋ ৠ ঌ ৡ  এ ঐ  ও ঔ".split(/\s/),
         vowel_marks: "া ি ী ু ূ ৃ ৄ ৢ ৣ  ে ৈ  ো ৌ".split(/\s/),
@@ -33,61 +13,24 @@ module aksarantara
         other: "    ড ঢ  য ".split(/\s/),
       },
 
-      # Devanagari
-      # ----------
-      # The most comprehensive and unambiguous Brahmic script listed.
-      #
       devanagari: {
-        # "Independent" forms of the vowels. These are used whenever the
-        # vowel does not immediately follow a consonant.
         vowels: "अ आ इ ई उ ऊ ऋ ॠ ऌ ॡ ऎ ए ऐ ऒ ओ औ".split(/\s/),
-
-        # "Dependent" forms of the vowels. These are used whenever the
-        # vowel immediately follows a consonant. If a letter is not
-        # listed in `vowels`, it should not be listed here.
         vowel_marks: "ा ि ी ु ू ृ ॄ ॢ ॣ ॆ े ै ॊ ो ौ".split(/\s/),
-
-        # Miscellaneous marks, all of which are used in Sanskrit.
         other_marks: "ं ः ँ".split(/\s/),
-
-        # In syllabic scripts like Devanagari, consonants have an inherent
-        # vowel that must be suppressed explicitly. We do so by putting a
-        # virama after the consonant.
         virama: ["्"],
-
-        # Various Sanskrit consonants and consonant clusters. Every token
-        # here has an explicit vowel. Thus "क" is "ka" instead of "k".
         consonants: "क ख ग घ ङ च छ ज झ ञ ट ठ ड ढ ण त थ द ध न " \
                     "प फ ब भ म य र ल व श ष स ह ळ क्ष ज्ञ".split(/\s/),
 
-        # Numbers and punctuation
+        
         symbols: "० १ २ ३ ४ ५ ६ ७ ८ ९ ॐ ऽ । ॥".split(/\s/),
-
-        # Zero-width joiner. This is used to separate a consonant cluster
-        # and avoid a complex ligature.
         zwj: ["\u200D"],
-
-        # Dummy consonant. This is used in ITRANS to prevert certain types
-        # of parser ambiguity. Thus "barau" -> बरौ but "bara_u" -> बरउ.
         skip: [""],
-
-        # Vedic accent. Udatta and anudatta.
         accent: %W[\u0951 \u0952],
-
-        # Accent combined with anusvara and and visarga. For compatibility
-        # with ITRANS, which allows the reverse of these four.
         combo_accent: "ः॑ ः॒ ं॑ ं॒".split(/\s/),
-
         candra: ["ॅ"],
-
-        # Non-Sanskrit consonants
         other: "क़ ख़ ग़ ज़ ड़ ढ़ फ़ य़ ऱ".split(/\s/),
       },
 
-      # Gujarati
-      # --------
-      # Sanskrit-complete.
-      #
       gujarati: {
         vowels: "અ આ ઇ ઈ ઉ ઊ ઋ ૠ ઌ ૡ  એ ઐ  ઓ ઔ".split(/\s/),
         vowel_marks: "ા િ ી ુ ૂ ૃ ૄ ૢ ૣ  ે ૈ  ો ૌ".split(/\s/),
@@ -99,10 +42,6 @@ module aksarantara
         candra: ["ૅ"],
       },
 
-      # Gurmukhi
-      # --------
-      # Missing R/RR/lR/lRR
-      #
       gurmukhi: {
         vowels: "ਅ ਆ ਇ ਈ ਉ ਊ      ਏ ਐ  ਓ ਔ".split(/\s/),
         vowel_marks: "ਾ ਿ ੀ ੁ ੂ      ੇ ੈ  ੋ ੌ".split(/\s/),
@@ -114,10 +53,6 @@ module aksarantara
         other: " ਖ ਗ ਜ ਡ  ਫ  ".split(/\s/),
       },
 
-      # Kannada
-      # -------
-      # Sanskrit-complete.
-      #
       kannada: {
         vowels: "ಅ ಆ ಇ ಈ ಉ ಊ ಋ ೠ ಌ ೡ ಎ ಏ ಐ ಒ ಓ ಔ".split(/\s/),
         vowel_marks: "ಾ ಿ ೀ ು ೂ ೃ ೄ ೢ ೣ ೆ ೇ ೈ ೊ ೋ ೌ".split(/\s/),
@@ -129,10 +64,7 @@ module aksarantara
         other: "      ಫ  ಱ".split(/\s/),
       },
 
-      # Malayalam
-      # ---------
-      # Sanskrit-complete.
-      #
+
       malayalam: {
         vowels: "അ ആ ഇ ഈ ഉ ഊ ഋ ൠ ഌ ൡ എ ഏ ഐ ഒ ഓ ഔ".split(/\s/),
         vowel_marks: "ാ ി ീ ു ൂ ൃ ൄ ൢ ൣ െ േ ൈ ൊ ോ ൌ".split(/\s/),
@@ -144,10 +76,7 @@ module aksarantara
         other: "        റ".split(/\s/),
       },
 
-      # Oriya
-      # -----
-      # Sanskrit-complete.
-      #
+    
       oriya: {
         vowels: "ଅ ଆ ଇ ଈ ଉ ଊ ଋ ୠ ଌ ୡ  ଏ ଐ  ଓ ଔ".split(/\s/),
         vowel_marks: "ା ି ୀ ୁ ୂ ୃ ୄ ୢ ୣ  େ ୈ  ୋ ୌ".split(/\s/),
@@ -159,11 +88,6 @@ module aksarantara
         other: "    ଡ ଢ  ଯ ".split(/\s/),
       },
 
-      # Tamil
-      # -----
-      # Missing R/RR/lR/lRR vowel marks and voice/aspiration distinctions.
-      # The most incomplete of the Sanskrit schemes here.
-      #
       tamil: {
         vowels: "அ ஆ இ ஈ உ ஊ     எ ஏ ஐ ஒ ஓ ஔ".split(/\s/),
         vowel_marks: "ா ி ீ ு ூ     ெ ே ை ொ ோ ௌ".split(/\s/),
@@ -174,11 +98,7 @@ module aksarantara
         symbols: "௦ ௧ ௨ ௩ ௪ ௫ ௬ ௭ ௮ ௯ ௐ ऽ । ॥".split(/\s/),
         other: "        ற".split(/\s/),
       },
-
-      # Telugu
-      # ------
-      # Sanskrit-complete.
-      #
+      
       telugu: {
         vowels: "అ ఆ ఇ ఈ ఉ ఊ ఋ ౠ ఌ ౡ ఎ ఏ ఐ ఒ ఓ ఔ".split(/\s/),
         vowel_marks: "ా ి ీ ు ూ ృ ౄ ౢ ౣ ె ే ై ొ ో ౌ".split(/\s/),
@@ -190,10 +110,6 @@ module aksarantara
         other: "        ఱ".split(/\s/),
       },
 
-      # International Alphabet of Sanskrit Transliteration
-      # --------------------------------------------------
-      # The most "professional" Sanskrit romanization scheme.
-      #
       iast: {
         vowels: "a ā i ī u ū ṛ ṝ ḷ ḹ  e ai  o au".split(/\s/),
         other_marks: ["ṃ", "ḥ", "~"],
@@ -202,15 +118,7 @@ module aksarantara
                     "p ph b bh m y r l v ś ṣ s h ḻ kṣ jñ".split(/\s/),
         symbols: "0 1 2 3 4 5 6 7 8 9 oṃ ' | ||".split(/\s/),
       },
-
-      # ITRANS
-      # ------
-      # One of the first romanization schemes -- and one of the most
-      # complicated. For alternate forms, see the "allAlternates" variable
-      # below.
-      #  *
-      # '_' is a "null" letter, which allows adjacent vowels.
-      #
+      
       itrans: {
         vowels: "a A i I u U RRi RRI LLi LLI  e ai  o au".split(/\s/),
         other_marks: ["M", "H", ".N"],
@@ -226,10 +134,6 @@ module aksarantara
         other: "q K G z .D .Dh f Y R".split(/\s/),
       },
 
-      # Harvard-Kyoto
-      # -------------
-      # A simple 1:1 mapping.
-      #
       hk: {
         vowels: "a A i I u U R RR lR lRR  e ai  o au".split(/\s/),
         other_marks: "M H ~".split(/\s/),
@@ -239,19 +143,6 @@ module aksarantara
         symbols: "0 1 2 3 4 5 6 7 8 9 OM ' | ||".split(/\s/),
       },
 
-      # National Library at Kolkata
-      # ---------------------------
-      # Apart from using "ē" and "ō" instead of "e" and "o", this scheme is
-      # identical to IAST. ṝ, ḷ, and ḹ are not part of the scheme proper.
-      #  *
-      # This is defined further below.
-      #
-
-      # Sanskrit Library Phonetic Basic
-      # -------------------------------
-      # With one ASCII letter per phoneme, this is the tersest transliteration
-      # scheme in use today and is especially suited to computer processing.
-      #
       slp1: {
         vowels: "a A i I u U f F x X  e E  o O".split(/\s/),
         other_marks: "M H ~".split(/\s/),
@@ -261,10 +152,6 @@ module aksarantara
         symbols: "0 1 2 3 4 5 6 7 8 9 oM ' | ||".split(/\s/),
       },
 
-      # Velthuis
-      # --------
-      # A case-insensitive Sanskrit encoding.
-      #
       velthuis: {
         vowels: "a aa i ii u uu .r .rr .li .ll  e ai  o au".split(/\s/),
         other_marks: ".m .h ".split(/\s/),
@@ -273,11 +160,7 @@ module aksarantara
                     "p ph b bh m y r l v ~s .s s h L k.s j~n".split(/\s/),
         symbols: "0 1 2 3 4 5 6 7 8 9 o.m ' | ||".split(/\s/),
       },
-
-      # WX
-      # --
-      # As terse as SLP1.
-      #
+      
       wx: {
         vowels: "a A i I u U q Q L   e E  o O".split(/\s/),
         other_marks: "M H z".split(/\s/),
@@ -288,16 +171,12 @@ module aksarantara
       },
     }
 
-    # Set of names of Roman schemes
     @roman_schemes = Set.new
 
-    # Set of names of Brahmic schemes
     @brahmic_schemes = Set.new
 
-    # Set of names of all schemes
     @scheme_names = Set.new
 
-    # Map of alternate encodings.
     @all_alternates = {
       itrans: {
         "A" => ["aa"],

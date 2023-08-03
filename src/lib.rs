@@ -4,8 +4,8 @@ extern crate regex;
 extern crate ruby_sys;
 
 #[macro_use]
-mod rb; 
-pub mod detect; 
+mod rb;
+pub mod detect;
 
 #[cfg(test)]
 mod tests {

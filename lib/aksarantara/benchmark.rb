@@ -1,19 +1,14 @@
-# frozen_string_literal: true
-
 module aksarantara
   begin
     require "benchmark/ips"
   rescue LoadError
-    #:nocov:
-    module ::Benchmark # rubocop:disable Style/ClassAndModuleChildren
+    module ::Benchmark 
       def self.ips(*)
         raise NotImplementedError, "You must install the `benchmark-ips` gem first."
       end
     end
-    #:nocov:
   end
 
-  # Benchmark/testing module.
   module Benchmark
     TEST_STRINGS = {
       brahmic: {
@@ -47,7 +42,6 @@ module aksarantara
 
     module_function
 
-    # Runs benchmark-ips test on detection methods.
     def detect!(time = 2, warmup = 1)
       ::Benchmark.ips do |x|
         x.config(time: time, warmup: warmup)
@@ -61,7 +55,6 @@ module aksarantara
       true
     end
 
-    # Runs benchmark-ips test on roman-source transliteration methods.
     def transliterate_roman!(time = 2, warmup = 1)
       ::Benchmark.ips do |x|
         x.config(time: time, warmup: warmup)
@@ -76,7 +69,6 @@ module aksarantara
       true
     end
 
-    # Runs benchmark-ips test on brahmic-source transliteration methods.
     def transliterate_brahmic!(time = 2, warmup = 1)
       ::Benchmark.ips do |x|
         x.config(time: time, warmup: warmup)

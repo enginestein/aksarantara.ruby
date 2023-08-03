@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "spec_helper"
 
 describe aksarantara::Transliterate do
@@ -15,12 +13,12 @@ describe aksarantara::Transliterate do
     end
   end
 
-  context ".roman_scheme?" do
+  context ".abrahmic_scheme?" do
     all_schemes.each do |scheme|
       expectation = roman_schemes.include?(scheme) ? true : false
       desc = ":#{scheme} should be #{expectation}"
       it desc do
-        expect(described_class.roman_scheme?(scheme)).to eq(expectation)
+        expect(described_class.abrahmic_scheme?(scheme)).to eq(expectation)
       end
     end
   end
