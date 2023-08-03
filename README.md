@@ -1,8 +1,8 @@
 # aksarantara.rb
 
-Here is the Ruby version of Aksarantara framework. Aksarantara is a framework for Indian languages transliteration.
+Aksarantara is a powerful transliteration framework primarily designed for Sanskrit, with additional transliteration features for various Indian languages. It offers multiple versions tailored for different programming languages, making it highly adaptable and versatile.
 
-## Installation
+# Installation
 
 Add this in your gemfile:
 
@@ -12,12 +12,10 @@ gem 'aksarantara'
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
 
-## Usage
+# Usage
 
-Aksarantara has two functions. 
-
-`aksarantara.detect(text)` and `aksarantara.transliterate(text, from, to)`
-
-Information on how to use these functions is available in the [PHP version of Aksarantara](https://www.github.com/enginestein/aksarantara.php)
+Information on how to use Aksarantara is available in the [PHP version of Aksarantara](https://www.github.com/enginestein/aksarantara.php)
